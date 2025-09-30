@@ -12,6 +12,7 @@ export const metadata = {
 export default function FeaturesPage() {
   return (
     <main>
+      <h1 className="sr-only">Features</h1>
       <FeaturesSection />
       {/* Detailed feature sections */}
       <section className="px-6 md:px-16 lg:px-24 xl:px-32 py-8 md:py-12 space-y-16">

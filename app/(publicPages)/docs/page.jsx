@@ -10,6 +10,7 @@ export default function DocsPage() {
     return (
         <main className="pt-24 md:pt-28 px-6 md:px-16 lg:px-24 xl:px-32 pb-16">
             <DocsMotion>
+                <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">Docs</h1>
                 <SectionTitle
                     title="Teametix Documentation"
                     subtitle="Coming soon — Implementation guides, API references, and best practices"
