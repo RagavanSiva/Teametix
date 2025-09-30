@@ -1,4 +1,4 @@
-import AboutUs from "@/sections/AboutUs";
+import AboutMotion from "./AboutMotion";
 
 export const metadata = {
   title: "About | Teametix",
@@ -8,7 +8,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <main className="pt-24 md:pt-28 pb-20">
-      <AboutUs />
+      <AboutMotion />
     </main>
   );
 }
