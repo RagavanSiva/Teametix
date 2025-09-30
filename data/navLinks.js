@@ -9,7 +9,7 @@ export const navLinks = [
   },
   {
     name: "Pricing",
-    href: "/pricing",
+    href: "/#pricing",
   },
 
   {

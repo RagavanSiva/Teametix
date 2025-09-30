@@ -1,15 +1,27 @@
+"use client";
 import SectionTitle from "@/components/SectionTitle";
 import { pricingData } from "@/data/pricingData";
 import { SparklesIcon } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Pricing() {
     return (
         <>
             <SectionTitle text1="Pricing" text2="Our Pricing Plans" text3="Flexible pricing options designed to meet your needs — whether you're just getting started or scaling up." />
 
-            <div className="flex flex-wrap items-center justify-center gap-6 mt-16">
+            <motion.div
+                className="flex flex-wrap items-center justify-center gap-6 mt-16"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }}
+            >
                 {pricingData.map((plan, index) => (
-                    <div key={index} className={`p-6 rounded-2xl max-w-75 w-full shadow-[0px_4px_26px] shadow-black/6 ${plan.mostPopular ? "relative pt-12 bg-gradient-to-b from-indigo-600 to-violet-600" : "bg-white"}`}>
+                    <motion.div
+                        key={index}
+                        className={`p-6 rounded-2xl max-w-75 w-full shadow-[0px_4px_26px] shadow-black/6 ${plan.mostPopular ? "relative pt-12 bg-gradient-to-b from-indigo-600 to-violet-600" : "bg-white"}`}
+                        variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
+                    >
                         {plan.mostPopular && (
                             <div className="flex items-center text-xs gap-1 py-1.5 px-2 text-indigo-600 absolute top-4 right-4 rounded bg-white font-medium">
                                 <SparklesIcon size={14} />
@@ -30,9 +42,9 @@ export default function Pricing() {
                         <button className={`transition w-full py-3 rounded-lg font-medium mt-8 ${plan.mostPopular ? "bg-white hover:bg-slate-100 text-slate-800" : "bg-indigo-600 hover:bg-indigo-700 text-white"}`}>
                             <span>{plan.buttonText}</span>
                         </button>
-                    </div>
+                    </motion.div>
                 ))}
-            </div>
+            </motion.div>
         </>
     );
 }

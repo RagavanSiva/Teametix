@@ -14,6 +14,7 @@ export default function Page() {
             <div id="features" className="scroll-mt-24" />
             <FeaturesSection />
             <Testimonials />
+            <div id="pricing" className="scroll-mt-24" />
             <Pricing />
             <FaqSection />
             <BottomBanner />
