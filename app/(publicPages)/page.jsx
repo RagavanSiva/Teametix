@@ -9,7 +9,7 @@ import TrustedCompanies from "@/sections/TrustedCompanies";
 export const metadata = {
   title: "Teametix | HR, Payroll & Workforce Management",
   description:
-    "Run HR, payroll, leave, attendance, timesheets and workflows in one platform. Centralize employee data, automate approvals, and scale with confidence.",
+    "Sri Lanka–ready HR platform: run payroll, leave, attendance, timesheets and workflows in one place. Affordable LKR pricing with EPF/ETF exports.",
 };
 
 export default function Page() {

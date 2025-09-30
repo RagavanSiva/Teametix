@@ -3,7 +3,8 @@ import { CheckIcon } from "lucide-react";
 export const pricingData = [
   {
     title: "Starter",
-    price: 49,
+    price: 30000,
+    link: "/contact",
     features: [
       { name: "Employee directory & profiles", icon: CheckIcon },
       { name: "Basic onboarding checklists", icon: CheckIcon },
@@ -15,8 +16,9 @@ export const pricingData = [
   },
   {
     title: "Growth",
-    price: 99,
+    price: 60000,
     mostPopular: true,
+    link: "/contact",
     features: [
       { name: "Everything in Starter", icon: CheckIcon },
       { name: "Advanced workflows & approvals", icon: CheckIcon },
@@ -29,7 +31,8 @@ export const pricingData = [
   },
   {
     title: "Enterprise",
-    price: 199,
+    price: 125000,
+    link: "/contact",
     features: [
       { name: "Everything in Growth", icon: CheckIcon },
       { name: "Custom roles & permissions", icon: CheckIcon },

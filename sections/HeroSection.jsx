@@ -37,7 +37,7 @@ export default function HeroSection() {
                 variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.3 }}
             >
-                Centralize employee data, automate onboarding and approvals, track leave & attendance, and run payroll with confidence.
+                Built for Sri Lanka: centralize employee data, automate onboarding & approvals, track leave/attendance, and run payroll with EPF/ETF exports — all at affordable LKR pricing.
             </motion.p>
             <motion.div
                 className="flex items-center gap-4 mt-6"

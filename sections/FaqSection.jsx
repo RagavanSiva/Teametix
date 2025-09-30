@@ -8,8 +8,13 @@ export const FaqSection = () => {
     const [openIndex, setOpenIndex] = useState(null);
     return (
         <div className="max-w-2xl mx-auto flex flex-col items-center justify-center px-4 md:px-0">
-            <SectionTitle text1="FAQ's" text2="Frequently asked questions" text3="Ship Beautiful Frontends Without the Overhead — Customizable, Scalable, and Developer-Friendly UI Components." />
+            <SectionTitle
+                text1="FAQ"
+                text2="Frequently asked questions"
+                text3="Teametix for Sri Lanka — payroll (EPF/ETF), leave, attendance, timesheets and affordable LKR pricing."
+            />
             <div className="mt-8">
+
                 {faqsData.map((faq, index) => (
                     <div className="border-b border-slate-200 py-4 cursor-pointer w-full" key={index} onClick={() => setOpenIndex(openIndex === index ? null : index)}>
                         <div className="flex items-center justify-between">
