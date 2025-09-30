@@ -3,7 +3,7 @@ import { CheckIcon } from "lucide-react";
 export const pricingData = [
   {
     title: "Starter",
-    price: 30000,
+    price: 99,
     link: "/contact",
     features: [
       { name: "Employee directory & profiles", icon: CheckIcon },
@@ -16,7 +16,7 @@ export const pricingData = [
   },
   {
     title: "Growth",
-    price: 60000,
+    price: 199,
     mostPopular: true,
     link: "/contact",
     features: [
@@ -31,7 +31,7 @@ export const pricingData = [
   },
   {
     title: "Enterprise",
-    price: 125000,
+    price: 399,
     link: "/contact",
     features: [
       { name: "Everything in Growth", icon: CheckIcon },

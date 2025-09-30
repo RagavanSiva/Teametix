@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function Pricing() {
-  const fmt = new Intl.NumberFormat("en-LK", {
+  const fmt = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "LKR",
+    currency: "USD",
     maximumFractionDigits: 0,
   });
   return (
