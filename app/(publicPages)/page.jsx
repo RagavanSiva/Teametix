@@ -11,6 +11,7 @@ export default function Page() {
         <>
             <HeroSection />
             <TrustedCompanies />
+            <div id="features" className="scroll-mt-24" />
             <FeaturesSection />
             <Testimonials />
             <Pricing />

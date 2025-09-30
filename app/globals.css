@@ -4,6 +4,10 @@
     --font-poppins: "Poppins", sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     @apply bg-white text-slate-800 text-sm font-poppins antialiased;
 }
