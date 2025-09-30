@@ -17,7 +17,7 @@ export default function HeroSection() {
       >
         <Link
           href="/contact"
-          className="flex items-center gap-2 rounded-full p-1 pr-3 mt-44 text-indigo-600 bg-indigo-50"
+          className="flex items-center gap-2 rounded-full p-1 pr-3 mt-30 text-indigo-600 bg-indigo-50"
         >
           <span className="bg-indigo-600 text-white text-xs px-3.5 py-1 rounded-full">
             NEW
@@ -29,15 +29,15 @@ export default function HeroSection() {
         </Link>
       </motion.div>
       <motion.h1
-        className="text-[40px]/12 md:text-[54px]/16 font-semibold max-w-3xl mt-4"
+        className="text-[40px]/12 md:text-[54px]/16 font-semibold max-w-6xl mt-4"
         variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
         transition={{ type: "spring", stiffness: 120, damping: 18 }}
       >
-        Run{" "}
+        Sri Lanka HR software for{" "}
         <span className="bg-gradient-to-r from-indigo-600 to-pink-500 bg-clip-text text-transparent">
-          HR, payroll & performance
-        </span>{" "}
-        in one place
+          payroll, attendance & performance
+        </span>
+        — all in one place
       </motion.h1>
       <motion.p
         className="text-base text-slate-600 max-w-lg mt-5"
@@ -48,6 +48,28 @@ export default function HeroSection() {
         approvals, track leave/attendance, and run payroll with EPF/ETF exports
         — all at affordable LKR pricing.
       </motion.p>
+      <motion.ul
+        className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-2 text-left text-slate-700"
+        variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
+      >
+        <li className="flex gap-2">
+          <span className="text-indigo-600">•</span> Centralize employee data &
+          HR reporting
+        </li>
+        <li className="flex gap-2">
+          <span className="text-indigo-600">•</span> Run payroll with EPF/ETF
+          exports and payslips
+        </li>
+        <li className="flex gap-2">
+          <span className="text-indigo-600">•</span> Track leave, attendance,
+          and timesheets
+        </li>
+        <li className="flex gap-2">
+          <span className="text-indigo-600">•</span> Performance reviews,
+          approvals, and workflows
+        </li>
+      </motion.ul>
+
       <motion.div
         className="flex items-center gap-4 mt-6"
         variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
@@ -59,11 +81,11 @@ export default function HeroSection() {
           <span>Book a demo</span>
         </Link>
         <Link
-          href="/features"
+          href="/pricing"
           className="flex items-center justify-center gap-2 border border-indigo-400 px-5 py-3 rounded-md text-indigo-600"
         >
           <SparklesIcon size={16} />
-          <span>Explore features</span>
+          <span>See pricing</span>
         </Link>
       </motion.div>
       <motion.div
@@ -71,7 +93,7 @@ export default function HeroSection() {
         transition={{ duration: 0.4 }}
       >
         <Image
-          className="w-full max-w-[700px] mt-3 drop-shadow-2xl drop-shadow-blue-500/15 mx-auto"
+          className="w-full max-w-[600px] mt-3 drop-shadow-2xl drop-shadow-blue-500/15 mx-auto"
           src="/assets/finalweb.png"
           alt="Hero Section Card Image"
           width={1000}
