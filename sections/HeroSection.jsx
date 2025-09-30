@@ -1,5 +1,6 @@
 import { ChevronRightIcon, SparklesIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HeroSection() {
     return (
@@ -22,13 +23,13 @@ export default function HeroSection() {
             </h1>
             <p className="text-base text-slate-600 max-w-lg mt-5">Workflows that never miss. automation that helps your team do more, effortlessly.</p>
             <div className="flex items-center gap-4 mt-6">
-                <button className="bg-indigo-600 hover:bg-indigo-700 transition px-8 py-3 rounded-md text-white">
+                <Link href="/contact" className="bg-indigo-600 hover:bg-indigo-700 transition px-8 py-3 rounded-md text-white">
                     <span>Get Started</span>
-                </button>
-                <button className="flex items-center justify-center gap-2 border border-indigo-400 px-5 py-3 rounded-md text-indigo-600">
+                </Link>
+                <Link href="/features" className="flex items-center justify-center gap-2 border border-indigo-400 px-5 py-3 rounded-md text-indigo-600">
                     <SparklesIcon size={16} />
                     <span>AI Features</span>
-                </button>
+                </Link>
             </div>
             <Image className="w-full max-w-xl mt-16 drop-shadow-2xl drop-shadow-blue-500/15 mx-auto" src="/assets/hero-section-card-image.svg" alt="Hero Section Card Image" width={1000} height={500} priority fetchPriority="high" />
         </div>

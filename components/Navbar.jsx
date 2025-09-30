@@ -35,20 +35,20 @@ export default function Navbar() {
                         {link.name}
                     </Link>
                 ))}
-                <button>
-                    Sign in
-                </button>
+                <Link href="/contact" className="px-5 h-11 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white transition inline-flex items-center">
+                    Contact
+                </Link>
                 <button className="aspect-square size-10 p-1 items-center justify-center bg-indigo-600 hover:bg-indigo-700 transition text-white rounded-md flex" onClick={() => setOpenMobileMenu(false)}>
                     <XIcon />
                 </button>
             </div>
             <div className="flex items-center gap-4">
-                <button className="hidden md:block hover:bg-slate-100 transition px-4 py-2 border border-indigo-600 rounded-md">
-                    Sign in
-                </button>
-                <button className="hidden md:block px-4 py-2 bg-indigo-600 hover:bg-indigo-700 transition text-white rounded-md">
+                <Link href="/contact" className="hidden md:block hover:bg-slate-100 transition px-4 py-2 border border-indigo-600 rounded-md">
+                    Contact
+                </Link>
+                <Link href="/contact" className="hidden md:block px-4 py-2 bg-indigo-600 hover:bg-indigo-700 transition text-white rounded-md">
                     Get started
-                </button>
+                </Link>
                 <button onClick={() => setOpenMobileMenu(!openMobileMenu)} className="md:hidden">
                     <MenuIcon size={26} className="active:scale-90 transition" />
                 </button>

@@ -8,14 +8,14 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-    title: "SaaSly - PrebuiltUI",
-    description: "SaaSly is a SaaS template for developers to build SaaS applications.",
+    title: "Teametix — HR Software for Payroll, Performance & Workforce Management",
+    description: "Teametix is an all-in-one HR platform for employee data, workflows, performance, leave & attendance, payroll and expenses.",
 };
 
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body>
+            <body className={poppins.variable}>
                 {children}
             </body>
         </html>
