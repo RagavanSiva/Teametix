@@ -1,5 +1,5 @@
 export default function robots() {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.teametix.com";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://teametix.com";
   return {
     rules: {
       userAgent: "*",

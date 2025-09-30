@@ -11,6 +11,7 @@ export const metadata = {
 export default function PricingPage() {
     return (
         <main className="pt-24 md:pt-28">
+            <h1 className="sr-only">Pricing</h1>
             <section className="px-6 md:px-16 lg:px-24 xl:px-32 py-8 md:py-12">
                 <SectionTitle
                     title="Simple, transparent pricing"

@@ -9,13 +9,15 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+  const { slug } = await params;
+  const post = blogPosts.find((p) => p.slug === slug);
   if (!post) return { title: "Post not found" };
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.teametix.com";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://teametix.com";
   const url = `${base}/blog/${post.slug}`;
   return {
     title: `${post.title} | Teametix Blog`,
     description: post.description,
+    metadataBase: new URL(base),
     openGraph: {
       title: `${post.title} | Teametix Blog`,
       description: post.description,
@@ -27,8 +29,9 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function BlogPostPage({ params }) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+export default async function BlogPostPage({ params }) {
+  const { slug } = await params;
+  const post = blogPosts.find((p) => p.slug === slug);
   if (!post) return notFound();
   return (
     <main className="pt-24 md:pt-28 px-6 md:px-16 lg:px-24 xl:px-32 pb-20">

@@ -1,7 +1,7 @@
 import { blogPosts } from "@/data/blogPosts";
 
 export default function sitemap() {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://www.teametix.com";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://teametix.com";
   const routes = [
     "",
     "/features",
