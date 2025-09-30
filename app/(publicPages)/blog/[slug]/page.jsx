@@ -58,7 +58,7 @@ export default function BlogPostPage({ params }) {
           )}
           <div className="prose prose-slate mt-6 max-w-none w-full">
             {post.content.map((para, idx) => (
-              <p className="mt-4" key={idx}>
+              <p className="mt-4 text-justify" key={idx}>
                 {para}
               </p>
             ))}
