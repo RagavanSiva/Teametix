@@ -6,6 +6,12 @@ import Pricing from "@/sections/Pricing";
 import Testimonials from "@/sections/Testimonials";
 import TrustedCompanies from "@/sections/TrustedCompanies";
 
+export const metadata = {
+    title: "Teametix | HR, Payroll & Workforce Management",
+    description:
+        "Run HR, payroll, leave, attendance, timesheets and workflows in one platform. Centralize employee data, automate approvals, and scale with confidence.",
+};
+
 export default function Page() {
     return (
         <>

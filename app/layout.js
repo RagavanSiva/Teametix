@@ -10,6 +10,11 @@ const poppins = Poppins({
 export const metadata = {
     title: "Teametix — HR Software for Payroll, Performance & Workforce Management",
     description: "Teametix is an all-in-one HR platform for employee data, workflows, performance, leave & attendance, payroll and expenses.",
+    icons: {
+        icon: "/favicon.ico",
+        shortcut: "/favicon.ico",
+        apple: "/favicon.ico",
+    },
 };
 
 export default function RootLayout({ children }) {
