@@ -11,6 +11,10 @@ export const navLinks = [
     name: "Pricing",
     href: "/#pricing",
   },
+  {
+    name: "Blog",
+    href: "/blog",
+  },
 
   {
     name: "Docs",
