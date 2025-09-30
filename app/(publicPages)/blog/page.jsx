@@ -13,7 +13,7 @@ export default function BlogIndexPage() {
   return (
     <main className="pt-24 md:pt-28 px-6 md:px-16 lg:px-24 xl:px-32 pb-20">
       <BlogMotion>
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
             Teametix Blog
           </h1>
