@@ -1,0 +1,23 @@
+# Netlify config for Next.js app
+# See: https://docs.netlify.com/integrations/frameworks/next-js/overview/
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NEXT_TELEMETRY_DISABLED = "1"
+  # Ensure your site URL is set in Netlify UI or via env var
+  # NEXT_PUBLIC_SITE_URL = "https://your-site.netlify.app"
+
+# Next.js Runtime plugin: handles SSR, routing, images, middleware, etc.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Optional: Basic security headers (can be extended)
+[[headers]]
+  for = "/(.*)"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
