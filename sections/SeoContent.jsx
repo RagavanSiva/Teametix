@@ -60,7 +60,7 @@ export default function SeoContent() {
         </div>
 
         <div className="mt-8 text-slate-700">
-          Looking to get started? <Link href="/contact" className="text-indigo-600 hover:underline">Book a demo</Link> or
+          Looking to get started? <Link href="/contact" className="text-indigo-600 hover:underline">Start 30‑day free trial</Link> or
           <Link href="/pricing" className="text-indigo-600 hover:underline"> see pricing</Link>.
         </div>
       </div>

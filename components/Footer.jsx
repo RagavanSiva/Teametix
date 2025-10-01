@@ -18,7 +18,7 @@ export default function Footer() {
             href="/contact"
             className="inline-flex items-center gap-2 mt-4 text-indigo-600 hover:text-indigo-700"
           >
-            <span>Book a demo</span>
+            <span>Start 30‑day free trial</span>
             <ArrowRightIcon size={16} />
           </Link>
         </div>

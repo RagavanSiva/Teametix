@@ -338,10 +338,7 @@ export default function ContactForm() {
           )}
         </div>
         <div className="grid gap-1.5">
-          <label
-            htmlFor="message"
-            className="text-sm font-medium text-slate-700"
-          >
+          <label htmlFor="message" className="text-sm font-medium text-slate-700">
             How can we help?
           </label>
           <textarea

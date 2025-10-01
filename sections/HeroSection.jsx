@@ -16,14 +16,14 @@ export default function HeroSection() {
         variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
       >
         <Link
-          href="/contact"
-          className="flex items-center gap-2 rounded-full p-1 pr-3 mt-30 text-indigo-600 bg-indigo-50"
+          href="/signup"
+          className="flex items-center gap-2 rounded-full p-1 pr-3 mt-22 text-indigo-600 bg-indigo-50"
         >
           <span className="bg-indigo-600 text-white text-xs px-3.5 py-1 rounded-full">
             NEW
           </span>
           <p className="flex items-center gap-1">
-            <span>Book a live demo of Teametix</span>
+            <span>Start a 30‑day free trial of Teametix</span>
             <ChevronRightIcon size={16} />
           </p>
         </Link>
@@ -75,19 +75,25 @@ export default function HeroSection() {
         variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
       >
         <Link
-          href="/contact"
+          href="/signup"
           className="bg-indigo-600 hover:bg-indigo-700 transition px-8 py-3 rounded-md text-white"
         >
-          <span>Book a demo</span>
+          <span>Start 30‑day free trial</span>
         </Link>
         <Link
-          href="/pricing"
+          href="/#pricing"
           className="flex items-center justify-center gap-2 border border-indigo-400 px-5 py-3 rounded-md text-indigo-600"
         >
           <SparklesIcon size={16} />
           <span>See pricing</span>
         </Link>
       </motion.div>
+      <motion.p
+        className="mt-3 text-sm text-slate-500"
+        variants={{ hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0 } }}
+      >
+        No credit card required
+      </motion.p>
       <motion.div
         variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
         transition={{ duration: 0.4 }}
