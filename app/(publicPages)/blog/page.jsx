@@ -31,10 +31,11 @@ export default function BlogIndexPage() {
             >
               {post.heroImage && (
                 <Image
-                  src={post.heroImage}
+                  src={`${post.heroImage}?auto=format&fit=crop&w=800&h=800&q=75`}
                   alt={post.title}
                   width={800}
                   height={800}
+                  sizes="(min-width: 768px) 50vw, 100vw"
                   className="w-full h-64 object-cover"
                 />
               )}
