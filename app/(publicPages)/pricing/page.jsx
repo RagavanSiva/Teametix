@@ -5,7 +5,7 @@ import BottomBanner from "@/sections/BottomBanner";
 
 export const metadata = {
     title: "Pricing | Teametix",
-    description: "Transparent pricing for Teametix HR. Choose a plan that fits your team and scale with confidence.",
+    description: "Per-user pricing for Teametix — free HR application with a 30-day free trial. No credit card required. Simple, affordable plans for Sri Lanka.",
 };
 
 export default function PricingPage() {

@@ -3,8 +3,8 @@ import { CheckIcon } from "lucide-react";
 export const pricingData = [
   {
     title: "Starter",
-    price: 99,
-    link: "/contact",
+    price: 0.99,
+    link: "/signup",
     features: [
       { name: "Employee directory & profiles", icon: CheckIcon },
       { name: "Basic onboarding checklists", icon: CheckIcon },
@@ -16,9 +16,9 @@ export const pricingData = [
   },
   {
     title: "Growth",
-    price: 199,
+    price: 1.99,
     mostPopular: true,
-    link: "/contact",
+    link: "/signup",
     features: [
       { name: "Everything in Starter", icon: CheckIcon },
       { name: "Advanced workflows & approvals", icon: CheckIcon },
@@ -27,11 +27,11 @@ export const pricingData = [
       { name: "Timesheets by project/cost center", icon: CheckIcon },
       { name: "Priority support", icon: CheckIcon },
     ],
-    buttonText: "Upgrade",
+    buttonText: "Start trial",
   },
   {
     title: "Enterprise",
-    price: 399,
+    price: 3.49,
     link: "/contact",
     features: [
       { name: "Everything in Growth", icon: CheckIcon },
@@ -40,6 +40,6 @@ export const pricingData = [
       { name: "SLA & dedicated support", icon: CheckIcon },
       { name: "Custom integrations & SSO (Okta/AAD)", icon: CheckIcon },
     ],
-    buttonText: "Contact sales",
+    buttonText: "Talk to sales",
   },
 ];

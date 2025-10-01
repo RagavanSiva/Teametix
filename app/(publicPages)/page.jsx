@@ -2,15 +2,30 @@ import BottomBanner from "@/sections/BottomBanner";
 import { FaqSection } from "@/sections/FaqSection";
 import FeaturesSection from "@/sections/FeaturesSection";
 import HeroSection from "@/sections/HeroSection";
-import SeoContent from "@/sections/SeoContent";
 import Pricing from "@/sections/Pricing";
 import Testimonials from "@/sections/Testimonials";
 import TrustedCompanies from "@/sections/TrustedCompanies";
+import SeoContent from "@/sections/SeoContent";
 
 export const metadata = {
-  title: "Teametix | HR, Payroll & Workforce Management",
+  title:
+    "Teametix | Free HR application — 30-day free trial, no credit card required",
   description:
-    "Sri Lanka–ready HR platform: run payroll, leave, attendance, timesheets and workflows in one place. affordable LKR pricing with EPF/ETF exports.",
+    "Free HR application for Sri Lanka. 30-day free trial, no credit card required. Manage employee data, workflows, leave & attendance, timesheets, and payroll with EPF/ETF readiness.",
+  openGraph: {
+    title:
+      "Teametix | Free HR application — 30-day free trial, no credit card required",
+    description:
+      "Free HR application for Sri Lanka. 30-day free trial, no credit card required. Manage employee data, workflows, leave & attendance, timesheets, and payroll with EPF/ETF readiness.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Teametix | Free HR application — 30-day free trial, no credit card required",
+    description:
+      "Free HR application for Sri Lanka. 30-day free trial, no credit card required.",
+  },
 };
 
 export default function Page() {

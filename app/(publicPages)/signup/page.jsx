@@ -1,8 +1,8 @@
 import SignupForm from "@/components/SignupForm";
 
 export const metadata = {
-  title: "Start 30-day free trial | Teametix",
-  description: "Register your organization to start a 30-day free trial of Teametix HR.",
+  title: "Start 30-day free trial | Teametix — free HR application, no credit card required",
+  description: "Start your 30-day free trial of Teametix — a free HR application for Sri Lanka. No credit card required.",
 };
 
 export default function SignupPage() {

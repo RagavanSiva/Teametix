@@ -9,7 +9,8 @@ export default function Pricing() {
   const fmt = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-    maximumFractionDigits: 0,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   });
   return (
     <>
@@ -60,7 +61,7 @@ export default function Pricing() {
                   plan.mostPopular ? "text-white" : "text-slate-500"
                 }`}
               >
-                /mo
+                /user/mo
               </span>
             </h4>
             <hr className="border-slate-200 my-8" />
