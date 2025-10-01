@@ -10,7 +10,7 @@ export default function FeaturesSection() {
       <SectionTitle
         text1="Features"
         text2="Everything you need in HR"
-        text3="Teametix covers the essentials end-to-end so you can run HR with clarity and speed."
+        text3="End‑to‑end HR for global teams — employee records, payroll, time & attendance, leave, and workflows."
       />
 
       <motion.div

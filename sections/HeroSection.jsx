@@ -29,24 +29,24 @@ export default function HeroSection() {
         </Link>
       </motion.div>
       <motion.h1
-        className="text-[40px]/12 md:text-[54px]/16 font-semibold max-w-6xl mt-4"
+        className="text-[40px]/12 md:text-[54px]/16 font-semibold max-w-4xl mt-4"
         variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
         transition={{ type: "spring", stiffness: 120, damping: 18 }}
       >
-        Sri Lanka HR software for{" "}
+        HR software for global teams{" "}
         <span className="bg-gradient-to-r from-indigo-600 to-pink-500 bg-clip-text text-transparent">
           payroll, attendance & performance
         </span>
-        — all in one place
+        &nbsp;all in one place
       </motion.h1>
       <motion.p
         className="text-base text-slate-600 max-w-lg mt-5"
         variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
         transition={{ duration: 0.3 }}
       >
-        Built for Sri Lanka: centralize employee data, automate onboarding &
-        approvals, track leave/attendance, and run payroll with EPF/ETF exports
-        — all at affordable LKR pricing.
+        Centralize employee data, automate onboarding & approvals, track
+        leave/attendance, and run payroll. Regional compliance support included
+        — e.g., Sri Lanka EPF/ETF exports and affordable local pricing.
       </motion.p>
       <motion.ul
         className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-2 text-left text-slate-700"

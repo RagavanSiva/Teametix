@@ -68,10 +68,10 @@ export default function Navbar() {
           Contact
         </Link>
         <Link
-          href="/features"
+          href="/signup"
           className="hidden md:block px-4 py-2 bg-indigo-600 hover:bg-indigo-700 transition text-white rounded-md"
         >
-          Get started
+          Start free trial
         </Link>
         <button
           onClick={() => setOpenMobileMenu(!openMobileMenu)}
