@@ -49,6 +49,16 @@ export default function SignupForm() {
     return hay.includes(phoneSearch.toLowerCase());
   }) : phoneCountries);
 
+  // Resolve a flag image source for a country entry
+  function flagSrc(entry) {
+    if (!entry) return null;
+    if (entry.flag) return entry.flag; // local asset provided in fallback
+    const iso = (entry.iso2 || entry.iso || "").toLowerCase();
+    if (!iso) return null;
+    // Use flagcdn PNG (small), avoids Next Image domain config by using <img>
+    return `https://flagcdn.com/24x18/${iso}.png`;
+  }
+
   // Try loading full lists from a static JSON for 195 countries
   useEffect(() => {
     let isMounted = true;
@@ -342,8 +352,8 @@ export default function SignupForm() {
             <div className="relative w-40 shrink-0">
               <button type="button" aria-haspopup="listbox" aria-expanded={countryOpen} onClick={() => setCountryOpen((o) => !o)} className="w-full h-11 rounded-md border border-slate-300 px-3 bg-white flex items-center justify-between gap-2 text-left">
                 <span className="flex items-center gap-2">
-                  {selectedCountry?.flag ? (
-                    <Image src={selectedCountry.flag} alt={selectedCountry.iso2 || selectedCountry.iso || ""} width={18} height={12} />
+                  {flagSrc(selectedCountry) ? (
+                    <img src={flagSrc(selectedCountry)} alt={(selectedCountry?.iso2 || selectedCountry?.iso || "").toString()} width={18} height={12} />
                   ) : null}
                   <span className="text-sm">{selectedCountry?.code || countryCode}</span>
                 </span>
@@ -364,8 +374,8 @@ export default function SignupForm() {
                     {filteredPhoneCountries.map((c) => (
                       <li key={`${c.code}-${c.iso2 || c.name}`} role="option">
                         <button type="button" onClick={() => { setCountryCode(c.code); setPhoneError(""); setCountryOpen(false); setPhoneSearch(""); }} className={`w-full px-3 py-2 flex items-center gap-2 text-sm hover:bg-slate-50 ${countryCode === c.code ? "bg-slate-50" : ""}`}>
-                          {c.flag ? (
-                            <Image src={c.flag} alt={c.iso2 || c.name} width={18} height={12} />
+                          {flagSrc(c) ? (
+                            <img src={flagSrc(c)} alt={(c.iso2 || c.name || "").toString()} width={18} height={12} />
                           ) : null}
                           <span>{c.code} ({c.iso2 || c.name})</span>
                         </button>
