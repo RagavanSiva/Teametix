@@ -10,6 +10,9 @@ export default function SignupForm() {
   const [error, setError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [confirmPwd, setConfirmPwd] = useState("");
   const [countryCode, setCountryCode] = useState("+94");
   const [countryOpen, setCountryOpen] = useState(false);
   const [employees, setEmployees] = useState("1-20");
@@ -18,21 +21,86 @@ export default function SignupForm() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [country, setCountry] = useState("Sri Lanka");
   const [countryOpenAddr, setCountryOpenAddr] = useState(false);
+  // dynamic country data (optional external JSON)
+  const [allCountries, setAllCountries] = useState([]); // ["Sri Lanka", ...]
+  const [callingCodes, setCallingCodes] = useState([]); // [{name, iso2, code}]
+  // search queries for dropdowns
+  const [phoneSearch, setPhoneSearch] = useState("");
+  const [countrySearch, setCountrySearch] = useState("");
 
   // Mark submissions from /signup as trials
   const [plan] = useState("trial");
 
-  const countries = [
-    { code: "+94", iso: "LK", label: "+94 (LK)", flag: "/assets/country_flags/LKR.png" },
-    { code: "+91", iso: "IN", label: "+91 (IN)", flag: "/assets/country_flags/INR.png" },
-    { code: "+971", iso: "AE", label: "+971 (AE)", flag: "/assets/country_flags/AED.png" },
-    { code: "+65", iso: "SG", label: "+65 (SG)", flag: "/assets/country_flags/SGD.png" },
-    { code: "+60", iso: "MY", label: "+60 (MY)", flag: "/assets/country_flags/MYR.png" },
-    { code: "+44", iso: "UK", label: "+44 (UK)", flag: "/assets/country_flags/GBP.png" },
-    { code: "+1", iso: "US", label: "+1 (US)", flag: "/assets/country_flags/USD.png" },
-    { code: "+61", iso: "AU", label: "+61 (AU)", flag: "/assets/country_flags/AUD.png" },
+  // Fallback small list (used if no external JSON is found)
+  const fallbackCodes = [
+    { code: "+94", iso2: "LK", name: "Sri Lanka", flag: "/assets/country_flags/LKR.png" },
+    { code: "+91", iso2: "IN", name: "India", flag: "/assets/country_flags/INR.png" },
+    { code: "+971", iso2: "AE", name: "United Arab Emirates", flag: "/assets/country_flags/AED.png" },
+    { code: "+65", iso2: "SG", name: "Singapore", flag: "/assets/country_flags/SGD.png" },
+    { code: "+60", iso2: "MY", name: "Malaysia", flag: "/assets/country_flags/MYR.png" },
+    { code: "+44", iso2: "GB", name: "United Kingdom", flag: "/assets/country_flags/GBP.png" },
+    { code: "+1", iso2: "US", name: "United States", flag: "/assets/country_flags/USD.png" },
+    { code: "+61", iso2: "AU", name: "Australia", flag: "/assets/country_flags/AUD.png" },
   ];
-  const selectedCountry = countries.find((c) => c.code === countryCode) || countries[0];
+  const phoneCountries = callingCodes.length ? callingCodes : fallbackCodes;
+  const selectedCountry = phoneCountries.find((c) => c.code === countryCode) || phoneCountries[0];
+  const filteredPhoneCountries = (phoneSearch ? phoneCountries.filter((c) => {
+    const hay = `${c.code} ${c.name || ""} ${c.iso2 || ""}`.toLowerCase();
+    return hay.includes(phoneSearch.toLowerCase());
+  }) : phoneCountries);
+
+  // Try loading full lists from a static JSON for 195 countries
+  useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      try {
+        const res = await fetch("/assets/country-data.json", { cache: "force-cache" });
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data?.countries) && Array.isArray(data?.callingCodes) && isMounted) {
+            setAllCountries(data.countries);
+            setCallingCodes(data.callingCodes);
+            return;
+          }
+        }
+      } catch {}
+      // Fallback: fetch from REST Countries if local JSON not available
+      try {
+        const res2 = await fetch("https://restcountries.com/v3.1/all?fields=name,cca2,idd,unMember", { cache: "no-store" });
+        if (!res2.ok) return;
+        const arr = await res2.json();
+        if (!Array.isArray(arr)) return;
+        const accepted = arr.filter((c) =>
+          c?.unMember === true || ["Holy See", "Palestine State"].includes(c?.name?.common)
+        );
+        const countries = accepted
+          .map((c) => c?.name?.common)
+          .filter(Boolean)
+          .sort((a, b) => a.localeCompare(b));
+        const codes = accepted
+          .map((c) => {
+            const root = c?.idd?.root || ""; // e.g. "+"
+            const suffixes = Array.isArray(c?.idd?.suffixes) ? c.idd.suffixes : [];
+            const code = root && suffixes.length ? `${root}${suffixes[0]}` : null;
+            return code
+              ? { name: c?.name?.common, iso2: c?.cca2, code }
+              : null;
+          })
+          .filter(Boolean)
+          // de-duplicate by code, prefer first occurrence
+          .reduce((acc, item) => {
+            if (!acc.find((x) => x.code === item.code)) acc.push(item);
+            return acc;
+          }, [])
+          .sort((a, b) => a.name.localeCompare(b.name));
+        if (isMounted) {
+          setAllCountries(countries);
+          setCallingCodes(codes);
+        }
+      } catch {}
+    })();
+    return () => { isMounted = false; };
+  }, []);
 
   function normalizeDigits(s) {
     return String(s || "").replace(/\D/g, "");
@@ -60,12 +128,20 @@ export default function SignupForm() {
     setError("");
     setPhoneError("");
     setPasswordError("");
+    setEmailError("");
     try {
       const form = e.currentTarget;
       const formData = new FormData(form);
       const payload = Object.fromEntries(formData.entries());
       const c = payload.countryCode || "";
       const phone = payload.phone || "";
+      const email = String(payload.email || "").trim();
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!emailOk) {
+        setLoading(false);
+        setEmailError("Please enter a valid work email address.");
+        return;
+      }
       // password check
       if ((payload.password || "").length < 8) {
         setLoading(false);
@@ -118,6 +194,8 @@ export default function SignupForm() {
       }
       setSuccess(true);
       form.reset();
+      setPwd("");
+      setConfirmPwd("");
     } catch (err) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -130,7 +208,7 @@ export default function SignupForm() {
       {success && (
         <div className="mt-6 max-w-2xl rounded-md border border-green-200 bg-green-50 text-green-800 p-4">
           <p className="font-medium">Thanks! Your trial request has been received.</p>
-          <p className="text-sm">We\'ll email your workspace details shortly.</p>
+          <p className="text-sm">We'll email your workspace details shortly.</p>
         </div>
       )}
       {error && (
@@ -148,7 +226,21 @@ export default function SignupForm() {
           </div>
           <div className="grid gap-1.5">
             <label htmlFor="email" className="text-sm font-medium text-slate-700">Work email</label>
-            <input id="email" name="email" type="email" required className="h-11 rounded-md border border-slate-300 px-3 outline-none focus:ring-2 focus:ring-indigo-600 bg-white" />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+              onChange={(e) => {
+                const val = e.target.value;
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) setEmailError("Please enter a valid work email address.");
+                else setEmailError("");
+              }}
+              aria-invalid={!!emailError}
+              className={`h-11 rounded-md border px-3 outline-none focus:ring-2 bg-white ${emailError ? "border-red-400 focus:ring-red-500" : "border-slate-300 focus:ring-indigo-600"}`}
+            />
+            {emailError && <p className="text-xs text-red-600">{emailError}</p>}
           </div>
         </div>
 
@@ -163,7 +255,14 @@ export default function SignupForm() {
                 required
                 minLength={8}
                 autoComplete="new-password"
-                className="h-11 w-full rounded-md border border-slate-300 px-3 pr-10 outline-none focus:ring-2 focus:ring-indigo-600 bg-white"
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setPwd(val);
+                  if (val.length < 8) setPasswordError("Password must be at least 8 characters.");
+                  else if (confirmPwd && val !== confirmPwd) setPasswordError("Passwords do not match.");
+                  else setPasswordError("");
+                }}
+                className={`h-11 w-full rounded-md border px-3 pr-10 outline-none focus:ring-2 bg-white ${passwordError ? "border-red-400 focus:ring-red-500" : "border-slate-300 focus:ring-indigo-600"}`}
               />
               <button
                 type="button"
@@ -185,7 +284,14 @@ export default function SignupForm() {
                 required
                 minLength={8}
                 autoComplete="new-password"
-                className="h-11 w-full rounded-md border border-slate-300 px-3 pr-10 outline-none focus:ring-2 focus:ring-indigo-600 bg-white"
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setConfirmPwd(val);
+                  if (val.length < 8) setPasswordError("Password must be at least 8 characters.");
+                  else if (pwd && val !== pwd) setPasswordError("Passwords do not match.");
+                  else setPasswordError("");
+                }}
+                className={`h-11 w-full rounded-md border px-3 pr-10 outline-none focus:ring-2 bg-white ${passwordError ? "border-red-400 focus:ring-red-500" : "border-slate-300 focus:ring-indigo-600"}`}
               />
               <button
                 type="button"
@@ -236,22 +342,40 @@ export default function SignupForm() {
             <div className="relative w-40 shrink-0">
               <button type="button" aria-haspopup="listbox" aria-expanded={countryOpen} onClick={() => setCountryOpen((o) => !o)} className="w-full h-11 rounded-md border border-slate-300 px-3 bg-white flex items-center justify-between gap-2 text-left">
                 <span className="flex items-center gap-2">
-                  <Image src={selectedCountry.flag} alt={selectedCountry.iso} width={18} height={12} />
-                  <span className="text-sm">{selectedCountry.code}</span>
+                  {selectedCountry?.flag ? (
+                    <Image src={selectedCountry.flag} alt={selectedCountry.iso2 || selectedCountry.iso || ""} width={18} height={12} />
+                  ) : null}
+                  <span className="text-sm">{selectedCountry?.code || countryCode}</span>
                 </span>
                 <svg className="h-4 w-4 text-slate-500" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" /></svg>
               </button>
               {countryOpen && (
-                <ul role="listbox" className="absolute z-10 mt-1 w-full max-h-60 overflow-auto rounded-md border border-slate-200 bg-white shadow-md">
-                  {countries.map((c) => (
-                    <li key={c.code} role="option">
-                      <button type="button" onClick={() => { setCountryCode(c.code); setPhoneError(""); setCountryOpen(false); }} className={`w-full px-3 py-2 flex items-center gap-2 text-sm hover:bg-slate-50 ${countryCode === c.code ? "bg-slate-50" : ""}`}>
-                        <Image src={c.flag} alt={c.iso} width={18} height={12} />
-                        <span>{c.label}</span>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                <div className="absolute z-10 mt-1 w-full rounded-md border border-slate-200 bg-white shadow-md">
+                  <div className="p-2 border-b border-slate-200 bg-slate-50">
+                    <input
+                      type="text"
+                      placeholder="Search Code"
+                      value={phoneSearch}
+                      onChange={(e) => setPhoneSearch(e.target.value)}
+                      className="w-full h-9 rounded-md border border-slate-300 px-2 outline-none focus:ring-2 focus:ring-indigo-600 bg-white text-sm"
+                    />
+                  </div>
+                  <ul role="listbox" className="max-h-60 overflow-auto">
+                    {filteredPhoneCountries.map((c) => (
+                      <li key={`${c.code}-${c.iso2 || c.name}`} role="option">
+                        <button type="button" onClick={() => { setCountryCode(c.code); setPhoneError(""); setCountryOpen(false); setPhoneSearch(""); }} className={`w-full px-3 py-2 flex items-center gap-2 text-sm hover:bg-slate-50 ${countryCode === c.code ? "bg-slate-50" : ""}`}>
+                          {c.flag ? (
+                            <Image src={c.flag} alt={c.iso2 || c.name} width={18} height={12} />
+                          ) : null}
+                          <span>{c.code} ({c.iso2 || c.name})</span>
+                        </button>
+                      </li>
+                    ))}
+                    {filteredPhoneCountries.length === 0 && (
+                      <li className="px-3 py-2 text-sm text-slate-500">No matches</li>
+                    )}
+                  </ul>
+                </div>
               )}
               <input type="hidden" id="countryCode" name="countryCode" value={countryCode} />
             </div>
@@ -304,22 +428,25 @@ export default function SignupForm() {
                 <svg className="h-4 w-4 text-slate-500" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" /></svg>
               </button>
               {countryOpenAddr && (
-                <ul role="listbox" className="absolute z-10 mt-1 w-full max-h-60 overflow-auto rounded-md border border-slate-200 bg-white shadow-md">
-                  {[
-                    "Sri Lanka",
-                    "India",
-                    "United Arab Emirates",
-                    "Singapore",
-                    "Malaysia",
-                    "Australia",
-                    "United Kingdom",
-                    "United States",
-                  ].map((c) => (
-                    <li key={c} role="option">
-                      <button type="button" onClick={() => { setCountry(c); setCountryOpenAddr(false); }} className={`w-full px-3 py-2 text-left text-sm hover:bg-slate-50 ${country === c ? "bg-slate-50" : ""}`}>{c}</button>
-                    </li>
-                  ))}
-                </ul>
+                <div className="absolute z-10 mt-1 w-full rounded-md border border-slate-200 bg-white shadow-md">
+                  <div className="p-2 border-b border-slate-200 bg-slate-50">
+                    <input
+                      type="text"
+                      placeholder="Search country"
+                      value={countrySearch}
+                      onChange={(e) => setCountrySearch(e.target.value)}
+                      className="w-full h-9 rounded-md border border-slate-300 px-2 outline-none focus:ring-2 focus:ring-indigo-600 bg-white text-sm"
+                    />
+                  </div>
+                  <ul role="listbox" className="max-h-60 overflow-auto">
+                    {((allCountries.length ? allCountries : phoneCountries.map(p => p.name))
+                      .filter((c) => c.toLowerCase().includes(countrySearch.toLowerCase()))).map((c) => (
+                      <li key={c} role="option">
+                        <button type="button" onClick={() => { setCountry(c); setCountryOpenAddr(false); setCountrySearch(""); }} className={`w-full px-3 py-2 text-left text-sm hover:bg-slate-50 ${country === c ? "bg-slate-50" : ""}`}>{c}</button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
               <input type="hidden" name="country" value={country} />
             </div>
