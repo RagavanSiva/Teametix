@@ -88,15 +88,34 @@ export default function SignupForm() {
         return;
       }
       const digits = normalizeDigits(phone);
-      payload.fullPhone = `${c}${digits}`;
-      payload.plan = plan; // mark as trial
-      const res = await fetch("/api/contact", {
+      // Build backend payload for organization registration
+      const apiBase = process.env.NEXT_PUBLIC_BACKEND_URL;
+      if (!apiBase) {
+        throw new Error("Backend URL not configured. Set NEXT_PUBLIC_BACKEND_URL in .env.local");
+      }
+      const url = `${apiBase}/api/organizations/auto/registrations`;
+      const body = {
+        fullName: payload.name,
+        email: payload.email,
+        phoneCode: c,
+        phoneNumber: digits,
+        password: payload.password,
+        company: payload.company || "",
+        addressLine1: payload.addressLine1,
+        addressLine2: payload.addressLine2 || "",
+        city: payload.city,
+        postalCode: payload.postalCode,
+        country: payload.country,
+      };
+      const res = await fetch(url, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(body),
       });
-      const data = await res.json();
-      if (!res.ok || !data.ok) throw new Error(data?.message || "Failed");
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data?.message || `Request failed (${res.status})`);
+      }
       setSuccess(true);
       form.reset();
     } catch (err) {
